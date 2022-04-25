@@ -9,12 +9,12 @@ public class CameraShake : MonoBehaviour
     private float lerp;
     private bool isShaking;
 
-    public void Shake(float maxShakeX, float maxShakeY, float duration)
+    public void Shake(float maxShakeX, float maxShakeY, float maxShakeZ, float duration)
     {
         if (isShaking == false)
         {
             StartCoroutine(ShakeRoutine(
-                endRotation: CreateRotation(maxShakeX, maxShakeY), 
+                endRotation: CreateRotation(maxShakeX, maxShakeY, maxShakeZ), 
                 duration: duration));
         }
     }
@@ -41,9 +41,9 @@ public class CameraShake : MonoBehaviour
         }
     }
 
-    private Quaternion CreateRotation(float xMax, float yMax)
+    private Quaternion CreateRotation(float xMax, float yMax, float zMax)
     {
-        Vector3 eulerRotation = new Vector3(xMax, yMax, 0);
+        Vector3 eulerRotation = new Vector3(xMax, yMax, zMax);
         return Quaternion.Euler(eulerRotation) * cam.localRotation;
     }
 }

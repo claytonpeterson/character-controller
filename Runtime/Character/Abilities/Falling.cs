@@ -44,7 +44,6 @@ public class Falling : MonoBehaviour
                 fallDistance = highestHeight - floorHeight;
                 highestHeight = currentHeight;
 
-                Debug.Log("total fall distance: " + fallDistance);
                 ApplyShake(fallDistance);
 
                 audio.clip = landingSound;
@@ -58,6 +57,7 @@ public class Falling : MonoBehaviour
         shake.Shake(
             maxShakeX: 2.5f, 
             maxShakeY: Random.Range(-1f, 1f), 
+            0,
             duration:  0.25f);
     }
 }
