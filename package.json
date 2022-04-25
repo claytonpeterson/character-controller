@@ -1,0 +1,19 @@
+{
+    "name": "com.skybirdgames.character-controller",
+    "version": "0.0.1",
+    "displayName": "Character Controller",
+    "description": "A character controller framework",
+    "unity": "2020.1",
+    "keywords": [
+        "character controller"
+    ],
+    "author": {
+        "name": "Skybird Games",
+        "email": "claypetersonart@gmail.com",
+        "url": "https://www.claypeterson.co"
+    },
+    "dependencies": {
+        "com.unity.inputsystem": "1.0.2"
+    },
+    "type": "tool"
+}
