@@ -530,6 +530,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2026949162802209342}
     m_Modifications:
+    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
+      propertyPath: dashForce
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
+      propertyPath: jumpForce
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
+      propertyPath: dashDuration
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
+      propertyPath: jumpDuration
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
+      propertyPath: jump.jumpForce
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
+      propertyPath: jump.doubleJumpForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
+      propertyPath: doubleJumpHeightReduction
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 219213489795905259, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
       propertyPath: m_RootOrder
       value: 0

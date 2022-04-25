@@ -22,9 +22,6 @@ namespace CharacterMovement
         public IForce AddForce(IForce force)
         {
             activeForces.Add(force);
-
-            Debug.Log("forces: " + activeForces.Count + " time: " + Time.time + " : " + force.ForceVelocity());
-
             return force;
         }
 

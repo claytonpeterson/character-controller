@@ -17,12 +17,6 @@ namespace CharacterMovement
 
             startTime = Time.time;
             endTime = startTime + duration;
-
-            Debug.Log(string.Format(
-                "start time {0}, end time {1}, start velocity {2}", 
-                startTime, 
-                endTime, 
-                initialVelocity));
         }
 
         public bool IsComplete()

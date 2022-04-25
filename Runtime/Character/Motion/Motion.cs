@@ -16,6 +16,7 @@ namespace CharacterMovement
         private readonly IForce[] motionSources;
 
         public CombinedForce Forces { get => forces; }
+        public ControlledForce Movement { get => movement; }
 
         public Motion(Transform body, float gravity)
         {
@@ -28,14 +29,14 @@ namespace CharacterMovement
         public void Update(Vector3 moveDirection, float moveSpeed)
         {
             // it would be cool to move this up a level
-            movement.AddInput(moveDirection, moveSpeed);
+            Movement.AddInput(moveDirection, moveSpeed);
 
             forces.RemoveCompleteForces();
         }
 
         public Vector3 Velocity(bool useGravity)
         {
-            var v = movement.ForceVelocity();
+            var v = Movement.ForceVelocity();
 
             if(useGravity)
                 v = ApplyGravity(v);

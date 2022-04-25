@@ -46,9 +46,16 @@ namespace CharacterMovement
         [SerializeField]
         private Speed speed;
 
-        private Slide slide;
+        [SerializeField]
+        private float dashForce = 12;
+
+        [SerializeField]
+        private float dashDuration = 1;
+
+        //private Slide slide;
 
         private JumpMechanic jump;
+        private DashMechanic dash;
 
         public Motion Motion { get => motion; }
 
@@ -62,7 +69,10 @@ namespace CharacterMovement
             motion = new Motion(transform, Gravity());
             body = new Body(characterController, horizontalRotation);
 
-            //slide = new Slide(transform);
+            //slide = new Slide(characterController.transform);
+
+            dash = new DashMechanic(transform, motion.Forces, dashForce, dashDuration);
+
             jump = new JumpMechanic(
                 characterController, 
                 motion.Forces, 
@@ -92,7 +102,7 @@ namespace CharacterMovement
             body.Rotate(rotationInput);
             body.Move(motion.Velocity(true));
 
-           /* if(slideForce != null)
+            /*if (slideForce != null)
             {
                 slideForce.ChangeVelocity(slide.FloorAngle() * 15);
                 Debug.Log(slide.FloorAngle());
@@ -117,6 +127,13 @@ namespace CharacterMovement
             jump.Jump(motion.Velocity(false), jumpDuration);
         }
 
+        public void Dash(Vector3 direction)
+        {
+            Debug.Log(transform.TransformDirection(direction));
+
+            dash.Dash(transform.TransformDirection(direction));
+        }
+
         public void SetRunning(bool isRunning)
         {
             if (isRunning)
@@ -131,7 +148,7 @@ namespace CharacterMovement
         {
             /*if (isCrouching)
             {
-                slideForce = new ConstantForce(slide.FloorAngle());
+                slideForce = new ConstantForce(slide.FloorAngle().normalized);
                 motion.Forces.AddForce(slideForce);
             }
             else
