@@ -123,6 +123,17 @@
                 },
                 {
                     "name": "",
+                    "id": "8d450f5c-5e8d-4efc-8b05-23f809ffbb9b",
+                    "path": "<DualShockGamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "dcfd0418-f507-42cc-8a3f-76e2ba2cc978",
                     "path": "<Keyboard>/shift",
                     "interactions": "",

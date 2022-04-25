@@ -140,7 +140,6 @@ namespace CharacterMovement
         {
             if(characterController.isGrounded)
             {
-                Debug.Log(direction);
                 dash.Dash(transform.TransformDirection(direction));
                 camShake.Shake(-direction.z * 2, 0, direction.x * 2, 0.25f);
             }
