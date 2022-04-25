@@ -37,11 +37,7 @@ namespace CharacterMovement
         {
             if (ctx.started)
             {
-                movement.SetJump(true);
-            }
-            else if (ctx.canceled)
-            {
-                movement.SetJump(false);
+                movement.Jump();
             }
         }
 

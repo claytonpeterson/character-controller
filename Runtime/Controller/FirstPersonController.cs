@@ -48,6 +48,8 @@ namespace CharacterMovement
 
         private Slide slide;
 
+        private JumpMechanic jump;
+
         public Motion Motion { get => motion; }
 
         float currentSpeed = 0;
@@ -59,7 +61,13 @@ namespace CharacterMovement
 
             motion = new Motion(transform, Gravity());
             body = new Body(characterController, horizontalRotation);
+
             //slide = new Slide(transform);
+            jump = new JumpMechanic(
+                characterController, 
+                motion.Forces, 
+                jumpForce, 
+                jumpForce / doubleJumpHeightReduction, 4);
         }
 
         public void Update()
@@ -104,48 +112,9 @@ namespace CharacterMovement
             inputDirection = input;
         }
 
-        bool jumping = false;
-        bool doubleJump = false;
-        IForce j;
-
-        public void SetJump(bool jump)
+        public void Jump()
         {
-            if (jump)
-            {
-                if (characterController.isGrounded)
-                {
-                    doubleJump = false;
-                    jumping = true;
-
-                    var direction = (Vector3.up * jumpForce) + motion.Velocity(false);
-
-                    j = motion.Forces.AddForce(
-                        new TimedForce(
-                            direction,
-                            jumpDuration));
-                }
-                else if (!doubleJump)
-                {
-                    doubleJump = true;
-
-                    var direction = Vector3.up * (jumpForce / doubleJumpHeightReduction) + motion.Velocity(false);
-
-                    if (j != null)
-                    {
-                        motion.Forces.RemoveForce(j);
-                        j = null;
-                    }
-
-                    motion.Forces.AddForce(
-                        new TimedForce(
-                            direction,
-                            jumpDuration));
-                }
-            }
-            else
-            {
-                jumping = false;
-            }
+            jump.Jump(motion.Velocity(false), jumpDuration);
         }
 
         public void SetRunning(bool isRunning)
