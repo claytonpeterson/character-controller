@@ -8,6 +8,9 @@ namespace CharacterMovement
         [SerializeField]
         private FirstPersonController movement;
 
+        [SerializeField]
+        private float dashDoubleTapSpeed = 0.4f;
+
         private float moveStart = 0;
 
         public void OnMove(InputAction.CallbackContext ctx)
@@ -15,7 +18,7 @@ namespace CharacterMovement
             if(ctx.started)
             {
                 // Determine dash
-                if(Time.time - moveStart < 0.3f)
+                if(Time.time - moveStart < dashDoubleTapSpeed)
                 {
                     var inputDirection = ctx.ReadValue<Vector2>();
                     movement.Dash(new Vector3(inputDirection.x, 0, inputDirection.y));
