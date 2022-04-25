@@ -22,8 +22,6 @@ namespace CharacterMovement
 
         public void Dash(Vector3 direction)
         {
-            Debug.Log(direction);
-
             forces.AddForce(force:
                 new TimedForce(direction * dashForce, duration));
         }

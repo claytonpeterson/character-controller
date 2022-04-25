@@ -52,10 +52,18 @@ namespace CharacterMovement
         [SerializeField]
         private float dashDuration = 1;
 
+        [SerializeField]
+        private float arielDashForce = 20;
+
+        [SerializeField]
+        private float arielDashDuration = 1.5f;
+
         //private Slide slide;
 
         private JumpMechanic jump;
+
         private DashMechanic dash;
+        private DashMechanic arielDash;
 
         public Motion Motion { get => motion; }
 
@@ -72,6 +80,7 @@ namespace CharacterMovement
             //slide = new Slide(characterController.transform);
 
             dash = new DashMechanic(transform, motion.Forces, dashForce, dashDuration);
+            arielDash = new DashMechanic(transform, motion.Forces, arielDashForce, arielDashDuration);
 
             jump = new JumpMechanic(
                 characterController, 
@@ -129,9 +138,15 @@ namespace CharacterMovement
 
         public void Dash(Vector3 direction)
         {
-            Debug.Log(transform.TransformDirection(direction));
+            if(characterController.isGrounded)
+            {
+                dash.Dash(transform.TransformDirection(direction));
 
-            dash.Dash(transform.TransformDirection(direction));
+            }
+            else
+            {
+                arielDash.Dash(transform.TransformDirection(direction));
+            }
         }
 
         public void SetRunning(bool isRunning)
