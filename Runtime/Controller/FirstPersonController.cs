@@ -124,13 +124,13 @@ namespace CharacterMovement
                             direction,
                             jumpDuration));
                 }
-                /*else if (!doubleJump)
+                else if (!doubleJump)
                 {
                     doubleJump = true;
 
-                    var direction = Vector3.up * (jumpForce/doubleJumpHeightReduction) + motion.Velocity(false);
+                    var direction = Vector3.up * (jumpForce / doubleJumpHeightReduction) + motion.Velocity(false);
 
-                    if(j != null)
+                    if (j != null)
                     {
                         motion.Forces.RemoveForce(j);
                         j = null;
@@ -140,7 +140,7 @@ namespace CharacterMovement
                         new TimedForce(
                             direction,
                             jumpDuration));
-                }*/
+                }
             }
             else
             {
