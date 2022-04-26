@@ -61,6 +61,7 @@ namespace CharacterMovement
         //private Slide slide;
 
         private JumpMechanic jump;
+        private WallrunMechanic wallrun;
 
         private DashMechanic dash;
         private DashMechanic arielDash;
@@ -81,6 +82,8 @@ namespace CharacterMovement
 
             dash = new DashMechanic(transform, motion.Forces, dashForce, dashDuration);
             arielDash = new DashMechanic(transform, motion.Forces, arielDashForce, arielDashDuration);
+
+            wallrun = new WallrunMechanic(characterController, transform);
 
             jump = new JumpMechanic(
                 characterController, 
@@ -107,9 +110,12 @@ namespace CharacterMovement
                 currentSpeed = speed.CurrentSpeed();
             }
 
+            // check if wallride
+            wallrun.Update();
+
             motion.Update(moveDirection, currentSpeed);
             body.Rotate(rotationInput);
-            body.Move(motion.Velocity(true));
+            body.Move(motion.Velocity(useGravity: !wallrun.IsWallRunning));
 
             /*if (slideForce != null)
             {
