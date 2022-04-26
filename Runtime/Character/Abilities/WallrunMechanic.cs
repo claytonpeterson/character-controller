@@ -8,6 +8,9 @@ namespace CharacterMovement
         [SerializeField]
         private float minSpeed;
 
+        [SerializeField]
+        private LayerMask layer;
+
         private float startTime;
 
         public void WallRide(CharacterController characterController, Speed speed)
@@ -39,7 +42,7 @@ namespace CharacterMovement
 
         private bool CheckDirection(Vector3 direction, Transform transform)
         {
-            return Physics.Raycast(transform.position, direction, 2);
+            return Physics.Raycast(transform.position, direction, 2, layer);
         }
 
         private bool MovingFastEnough(Speed speed)
