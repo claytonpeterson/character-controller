@@ -34,8 +34,6 @@ namespace CharacterMovement
         private Rotator horizontalRotation;
         private Rotator verticalRotation;
 
-        private Body body;
-
         private Vector2 inputDirection;
         private Vector3 moveDirection;
         private Vector3 rotationInput;
@@ -76,7 +74,6 @@ namespace CharacterMovement
             verticalRotation = new Rotator(headCamera, rotationSpeed, rotationSmoothing, Rotator.Axis.VERTICAL);
 
             motion = new Motion(transform, Gravity());
-            body = new Body(characterController, horizontalRotation);
 
             //slide = new Slide(characterController.transform);
 
@@ -113,8 +110,8 @@ namespace CharacterMovement
             }
 
             motion.Update(moveDirection, currentSpeed);
-            body.Rotate(rotationInput);
-            body.Move(motion.Velocity(useGravity: !wallrun.CanWallride()));
+            Rotate(rotationInput);
+            Move(motion.Velocity(useGravity: !wallrun.CanWallride()));
 
             if(wallrun.CanWallride())
             {
@@ -135,6 +132,16 @@ namespace CharacterMovement
 
             // Rotate camera
             verticalRotation.Rotate(-rotationInput.y);
+        }
+
+        public void Move(Vector3 velocity)
+        {
+            characterController.Move(velocity * Time.deltaTime);
+        }
+
+        public void Rotate(Vector3 rotationInput)
+        {
+            horizontalRotation.Rotate(rotationInput.x);
         }
 
         public void SetRotation(Vector3 rotation)
