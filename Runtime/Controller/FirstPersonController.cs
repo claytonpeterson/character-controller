@@ -117,6 +117,15 @@ namespace CharacterMovement
             body.Rotate(rotationInput);
             body.Move(motion.Velocity(useGravity: !wallrun.IsWallRunning));
 
+            /*if(wallrun.IsWallRunning)
+            {
+                camShake.Tilt(wallrun.Left() ? -25 : 25);
+            }
+            else
+            {
+                camShake.Tilt(0);
+            }
+*/
             /*if (slideForce != null)
             {
                 slideForce.ChangeVelocity(slide.FloorAngle() * 15);

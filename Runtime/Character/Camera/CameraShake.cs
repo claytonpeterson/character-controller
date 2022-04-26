@@ -19,6 +19,12 @@ public class CameraShake : MonoBehaviour
         }
     }
 
+    public void Tilt(float tileAmount)
+    {
+        Vector3 eulerRotation = new Vector3(0, 0, tileAmount);;
+        cam.transform.localRotation = Quaternion.Euler(eulerRotation);
+    }
+
     private IEnumerator ShakeRoutine(Quaternion endRotation, float duration)
     {
         isShaking = true;

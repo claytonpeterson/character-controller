@@ -18,25 +18,27 @@ public class WallrunMechanic
     public void Update()
     {
         isWallRunning = characterController.isGrounded == false && CanWallride();
+
+        Debug.Log(string.Format("left? {0} right? {1}", Left(), Right()));
     }
 
     private bool CanWallride()
     {
-        return CheckDirection(Left()) || CheckDirection(Right());
+        return Left() || Right();
+    }
+
+    public bool Left()
+    {
+        return CheckDirection(transform.TransformDirection(Vector3.left));
+    }
+
+    public bool Right()
+    {
+        return CheckDirection(transform.TransformDirection(Vector3.right));
     }
 
     private bool CheckDirection(Vector3 direction)
     {
         return Physics.Raycast(transform.position, direction, 2);
-    }
-
-    private Vector3 Left()
-    {
-        return transform.TransformDirection(Vector3.left);
-    }
-
-    private Vector3 Right()
-    {
-        return transform.TransformDirection(Vector3.right);
     }
 }
