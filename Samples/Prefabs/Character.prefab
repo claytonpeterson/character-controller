@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 219213489795905271}
   - component: {fileID: 219213489795905262}
   - component: {fileID: 772314630}
+  - component: {fileID: 963692455}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -342,12 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterController: {fileID: 219213489795905271}
   headCamera: {fileID: 219213489183100865}
-  rotationSpeed: 45
-  rotationSmoothing: 2
   gravityMultiplier: 1
-  jumpForce: 40
-  jumpDuration: 0.6
-  doubleJumpHeightReduction: 2
   camShake: {fileID: 1604864584}
   motion: {}
   speed:
@@ -368,10 +364,52 @@ MonoBehaviour:
       deceleration: 0
     speeds:
     - minSpeed: 0.75
-      maxSpeed: 5
+      maxSpeed: 8
       acceleration: 0.25
-      deceleration: 0.15
+      deceleration: 0.25
     - minSpeed: 0.75
-      maxSpeed: 10
-      acceleration: 0.25
-      deceleration: 0.2
+      maxSpeed: 16
+      acceleration: 0.3
+      deceleration: 0.3
+  horizontalRotator:
+    rotationSpeed: 10
+    smoothing: 1
+  verticalRotator:
+    rotationSpeed: 10
+    smoothing: 1
+  jump:
+    duration: 1
+    jumpForce: 25
+    doubleJumpForce: 0.8
+    maxInAirJumps: 4
+  dash:
+    doubleTapActivationSpeed: 0.4
+    dashForce: 40
+    duration: 0.25
+  aerialDash:
+    doubleTapActivationSpeed: 0.4
+    dashForce: 50
+    duration: 0.4
+  wallrun:
+    minSpeed: 5
+    layer:
+      serializedVersion: 2
+      m_Bits: 256
+--- !u!114 &963692455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219213489795905269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2852735ea25e4c8448f7b75bc47d29e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  safeFallHeight: 5
+  characterController: {fileID: 219213489795905271}
+  shake: {fileID: 1604864584}
+  audio: {fileID: 219213489795905262}
+  jumpSound: {fileID: 8300000, guid: 40f615d33cd6704499452212f0573803, type: 3}
+  landingSound: {fileID: 8300000, guid: 2248f3650624a1f42a6f4957a94afcb7, type: 3}

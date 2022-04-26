@@ -2,40 +2,41 @@
 
 namespace CharacterMovement
 {
+    [System.Serializable]
     public class JumpMechanic
     {
-        private readonly CharacterController cc;
-        private readonly CombinedForce forces;
-        private readonly float jumpForce;
-        private readonly float doubleJumpForce;
-        private readonly int maxInAirJumps;
+        [SerializeField]
+        private float duration;
 
+        [SerializeField]
+        private float jumpForce;
+        
+        [SerializeField]
+        private float doubleJumpForce;
+
+        [SerializeField]
+        private int maxInAirJumps;
+
+        private CombinedForce forces;
         private TimedForce jump;
         private int inAirJumps;
 
-        public JumpMechanic(CharacterController cc, CombinedForce forces, float jumpForce, float doubleJumpForce, int maxInAirJumps)
+        public void Jump(CharacterController cc, CombinedForce forces, Vector3 velocity)
         {
-            this.cc = cc;
             this.forces = forces;
-            this.jumpForce = jumpForce;
-            this.doubleJumpForce = doubleJumpForce;
-            this.maxInAirJumps = maxInAirJumps;
-        }
 
-        public void Jump(Vector3 velocity, float duration)
-        {
             if(jump == null && cc.isGrounded)
             {
-                StartJump(velocity, duration);
+                StartJump(velocity);
             }
             else if (inAirJumps < maxInAirJumps-1)
             {
                 EndJump();
-                DoubleJump(velocity, duration);
+                DoubleJump(velocity);
             }
         }
 
-        private void StartJump(Vector3 velocity, float duration)
+        private void StartJump(Vector3 velocity)
         {
             inAirJumps = 0;
 
@@ -43,7 +44,7 @@ namespace CharacterMovement
                 new TimedForce(Vector3.up * jumpForce + velocity, duration));
         }
 
-        private void DoubleJump(Vector3 velocity, float duration)
+        private void DoubleJump(Vector3 velocity)
         {
             inAirJumps++;
 

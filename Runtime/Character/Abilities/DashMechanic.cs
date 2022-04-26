@@ -1,29 +1,41 @@
 ﻿using UnityEngine;
 
-
 namespace CharacterMovement
 {
+    [System.Serializable]
     public class DashMechanic
     {
-        private readonly Transform transform;
-        private readonly CombinedForce forces;
-        private readonly float dashForce;
-        private readonly float duration;
+        [SerializeField]
+        private float doubleTapActivationSpeed = 0.25f;
 
-        private TimedForce dash;
+        [SerializeField]
+        private float dashForce;
+        
+        [SerializeField]
+        private float duration;
 
-        public DashMechanic(Transform transform, CombinedForce forces, float force, float duration)
+        private double lastInput;
+
+        public bool Dash(CombinedForce forces, Vector3 direction, double time)
         {
-            this.transform = transform;
-            this.forces = forces;
-            this.dashForce = force;
-            this.duration = duration;
+            var canDash = CanDash(DurationSinceLastTap(time));
+            if (canDash)
+            {
+                forces.AddForce(new TimedForce(direction * dashForce, duration));
+            }
+
+            lastInput = time;
+            return canDash;
         }
 
-        public void Dash(Vector3 direction)
+        public bool CanDash(double duration)
         {
-            forces.AddForce(force:
-                new TimedForce(direction * dashForce, duration));
+            return duration <= doubleTapActivationSpeed;
+        }
+
+        private double DurationSinceLastTap(double currentTime)
+        {
+            return currentTime - lastInput;
         }
     }
 }

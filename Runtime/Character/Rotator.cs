@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class Rotator 
 {
     public enum Axis
@@ -8,36 +9,37 @@ public class Rotator
         VERTICAL
     }
 
-    private readonly Transform bodyTransform;
-    private readonly float rotationSpeed;
-    private readonly float smoothing;
-    private readonly Axis rotationAxis;
+    [SerializeField]
+    private float rotationSpeed;
+    
+    [SerializeField]
+    private float smoothing;
 
-    private float smoothRotationInput;
     private Vector3 rotation;
+    private Axis rotationAxis;
+    private Transform transform;
+    private float smoothRotationInput;
 
-    public Rotator(Transform bodyTransform, float rotationSpeed, float smoothing, Axis rotationAxis)
+    public void Setup(Axis rotationAxis, Transform transform)
     {
-        this.bodyTransform = bodyTransform;
-        this.rotationSpeed = rotationSpeed;
-        this.smoothing = smoothing;
         this.rotationAxis = rotationAxis;
+        this.transform = transform;
     }
 
     public void Rotate(float rotationInput)
     {
         rotationInput = rotationInput * rotationSpeed * Time.deltaTime;
-        
+
         smoothRotationInput = Mathf.Lerp(
-            smoothRotationInput, 
-            rotationInput, 
+            smoothRotationInput,
+            rotationInput,
             smoothing);
 
         rotation = GetEulerRotation(smoothRotationInput);
 
         if (rotation.magnitude > 0)
         {
-            bodyTransform.rotation = Quaternion.Euler(bodyTransform.rotation.eulerAngles + rotation);
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + rotation);
         }
     }
 
