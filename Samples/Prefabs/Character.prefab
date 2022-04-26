@@ -343,12 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterController: {fileID: 219213489795905271}
   headCamera: {fileID: 219213489183100865}
-  rotationSpeed: 45
-  rotationSmoothing: 2
   gravityMultiplier: 1
-  jumpForce: 25
-  jumpDuration: 0.8
-  doubleJumpHeightReduction: 2
   camShake: {fileID: 1604864584}
   motion: {}
   speed:
@@ -369,17 +364,35 @@ MonoBehaviour:
       deceleration: 0
     speeds:
     - minSpeed: 0.75
-      maxSpeed: 5
+      maxSpeed: 8
       acceleration: 0.25
-      deceleration: 0.15
+      deceleration: 0.25
     - minSpeed: 0.75
-      maxSpeed: 10
-      acceleration: 0.25
-      deceleration: 0.2
-  dashForce: 40
-  dashDuration: 0.25
-  arielDashForce: 50
-  arielDashDuration: 0.4
+      maxSpeed: 16
+      acceleration: 0.3
+      deceleration: 0.3
+  horizontalRotator:
+    rotationSpeed: 60
+    smoothing: 1
+  verticalRotator:
+    rotationSpeed: 60
+    smoothing: 1
+  jump:
+    duration: 1
+    jumpForce: 25
+    doubleJumpForce: 0.8
+    maxInAirJumps: 4
+  dash:
+    dashForce: 40
+    duration: 0.25
+  aerialDash:
+    dashForce: 50
+    duration: 0.4
+  wallrun:
+    minSpeed: 5
+    layer:
+      serializedVersion: 2
+      m_Bits: 256
 --- !u!114 &963692455
 MonoBehaviour:
   m_ObjectHideFlags: 0

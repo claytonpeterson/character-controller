@@ -4,62 +4,39 @@ namespace CharacterMovement
 {
     public class Movement : MonoBehaviour
     {
-        [SerializeField]
-        private CharacterController characterController;
+        [SerializeField] private CharacterController characterController;
+        [SerializeField] private Transform headCamera;
+        [SerializeField] private float gravityMultiplier;
+        [SerializeField] private CameraShake camShake;
 
-        [SerializeField]
-        private Transform headCamera;
+        [Header("Movement")]
+        [SerializeField] private Motion motion;
+        [SerializeField] private Speed speed;
 
-        [SerializeField]
-        private float rotationSpeed;
-
-        [SerializeField]
-        private float rotationSmoothing;
-
-        [SerializeField]
-        private float gravityMultiplier;
-
-        [SerializeField]
-        private CameraShake camShake;
-
-        private Rotator horizontalRotation;
-        private Rotator verticalRotation;
-
-        private Vector2 inputDirection;
-        private Vector3 moveDirection;
-        private Vector3 rotationInput;
-
-        [SerializeField]
-        private Motion motion;
-
-        [SerializeField]
-        private Speed speed;
-
-        //private Slide slide;
+        [Header("Rotation")]
+        [SerializeField] private Rotator horizontalRotator;
+        [SerializeField] private Rotator verticalRotator;
 
         [Header("Abilities")]
-        [SerializeField]
-        private JumpMechanic jump;
-
-        [SerializeField]
-        private WallrunMechanic wallrun;
-
-        [SerializeField]
-        private DashMechanic dash;
-
-        [SerializeField]
-        private DashMechanic aerialDash;
+        [SerializeField] private JumpMechanic jump;
+        [SerializeField] private DashMechanic dash;
+        [SerializeField] private DashMechanic aerialDash;
+        [SerializeField] private WallrunMechanic wallrun;
 
         public Motion Motion { get => motion; }
 
         float currentSpeed = 0;
 
+        private Vector2 inputDirection;
+        private Vector3 moveDirection;
+        private Vector3 rotationInput;
+
         private void Start()
         {
-            horizontalRotation = new Rotator(transform, rotationSpeed, rotationSmoothing, Rotator.Axis.HORIZONTAL);
-            verticalRotation = new Rotator(headCamera, rotationSpeed, rotationSmoothing, Rotator.Axis.VERTICAL);
-
             motion = new Motion(transform, Gravity());
+
+            verticalRotator.Setup(Rotator.Axis.VERTICAL, headCamera);
+            horizontalRotator.Setup(Rotator.Axis.HORIZONTAL, transform);        
         }
 
         bool cleanedup;
@@ -104,17 +81,7 @@ namespace CharacterMovement
             }*/
 
             // Rotate camera
-            verticalRotation.Rotate(-rotationInput.y);
-        }
-
-        public void Move(Vector3 velocity)
-        {
-            characterController.Move(velocity * Time.deltaTime);
-        }
-
-        public void Rotate(Vector3 rotationInput)
-        {
-            horizontalRotation.Rotate(rotationInput.x);
+            verticalRotator.Rotate(-rotationInput.y);
         }
 
         public void SetRotation(Vector3 rotation)
@@ -174,6 +141,15 @@ namespace CharacterMovement
         private float Gravity()
         {
             return 9.81f * gravityMultiplier;
+        }
+        private void Move(Vector3 velocity)
+        {
+            characterController.Move(velocity * Time.deltaTime);
+        }
+
+        private void Rotate(Vector3 rotationInput)
+        {
+            horizontalRotator.Rotate(rotationInput.x);
         }
 
         private void OnDrawGizmos()
