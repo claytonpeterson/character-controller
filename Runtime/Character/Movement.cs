@@ -20,15 +20,6 @@ namespace CharacterMovement
         private float gravityMultiplier;
 
         [SerializeField]
-        private float jumpForce = 12;
-
-        [SerializeField]
-        private float jumpDuration = 0.5f;
-
-        [SerializeField]
-        private float doubleJumpHeightReduction = 2f;
-
-        [SerializeField]
         private CameraShake camShake;
 
         private Rotator horizontalRotation;
@@ -46,8 +37,11 @@ namespace CharacterMovement
 
         //private Slide slide;
 
-        private JumpMechanic jump;
         private WallrunMechanic wallrun;
+
+        [Header("Abilities")]
+        [SerializeField]
+        private JumpMechanic jump;
 
         [SerializeField]
         private DashMechanic dash;
@@ -69,12 +63,6 @@ namespace CharacterMovement
             //slide = new Slide(characterController.transform);
 
             wallrun = new WallrunMechanic(characterController, transform, speed, 12);
-
-            jump = new JumpMechanic(
-                characterController, 
-                motion.Forces, 
-                jumpForce, 
-                jumpForce / doubleJumpHeightReduction, 4);
         }
 
         bool cleanedup;
@@ -144,7 +132,7 @@ namespace CharacterMovement
 
         public void Jump()
         {
-            jump.Jump(motion.Velocity(false), jumpDuration);
+            jump.Jump(characterController, motion.Forces, motion.Velocity(false));
         }
 
         public void Dash(Vector3 direction)
