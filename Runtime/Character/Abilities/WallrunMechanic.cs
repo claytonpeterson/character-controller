@@ -2,56 +2,47 @@
 
 namespace CharacterMovement
 {
+    [System.Serializable]
     public class WallrunMechanic
     {
-        private readonly CharacterController characterController;
-        private readonly Transform transform;
-        private readonly Speed speed;
-        private readonly float minSpeed;
+        [SerializeField]
+        private float minSpeed;
 
         private float startTime;
 
-        public WallrunMechanic(CharacterController characterController, Transform transform, Speed speed, float minSpeed)
+        public void WallRide(CharacterController characterController, Speed speed)
         {
-            this.characterController = characterController;
-            this.transform = transform;
-            this.speed = speed;
-            this.minSpeed = minSpeed;
-        }
-
-        public void WallRide()
-        {
-            if(CanWallride() && startTime <= 0)
+            if(characterController != null && CanWallride(characterController, speed) && startTime <= 0)
             {
 
             }
         }
 
-        public bool CanWallride()
+        public bool CanWallride(CharacterController characterController, Speed speed)
         {
             return 
-                (Left() || Right()) && 
-                MovingFastEnough() &&
+                (Left(characterController.transform) || Right(characterController.transform)) && 
+                MovingFastEnough(speed) &&
                 //WithinDuration() &&
                 !characterController.isGrounded;
         }
 
-        public bool Left()
+        public bool Left(Transform transform)
         {
-            return CheckDirection(transform.TransformDirection(Vector3.left));
+            return CheckDirection(transform.TransformDirection(Vector3.left), transform);
         }
 
-        public bool Right()
+        public bool Right(Transform transform)
         {
-            return CheckDirection(transform.TransformDirection(Vector3.right));
+            return CheckDirection(transform.TransformDirection(Vector3.right), transform);
         }
 
-        private bool CheckDirection(Vector3 direction)
+        private bool CheckDirection(Vector3 direction, Transform transform)
         {
             return Physics.Raycast(transform.position, direction, 2);
         }
 
-        private bool MovingFastEnough()
+        private bool MovingFastEnough(Speed speed)
         {
             return speed.CurrentSpeed() >= minSpeed;
         }

@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!143 &213898742 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 219213489795905271, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
+  m_PrefabInstance: {fileID: 305470601}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &305470601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,8 +136,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
+      propertyPath: jump.cc
+      value: 
+      objectReference: {fileID: 213898742}
+    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
       propertyPath: dash.duration
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
+      propertyPath: jump.duration
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
       propertyPath: dash.dashForce
@@ -141,6 +154,10 @@ PrefabInstance:
     - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
       propertyPath: jump.jumpForce
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
+      propertyPath: wallrun.minSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
       propertyPath: jump.maxInAirJumps

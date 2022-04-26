@@ -37,11 +37,12 @@ namespace CharacterMovement
 
         //private Slide slide;
 
-        private WallrunMechanic wallrun;
-
         [Header("Abilities")]
         [SerializeField]
         private JumpMechanic jump;
+
+        [SerializeField]
+        private WallrunMechanic wallrun;
 
         [SerializeField]
         private DashMechanic dash;
@@ -59,10 +60,6 @@ namespace CharacterMovement
             verticalRotation = new Rotator(headCamera, rotationSpeed, rotationSmoothing, Rotator.Axis.VERTICAL);
 
             motion = new Motion(transform, Gravity());
-
-            //slide = new Slide(characterController.transform);
-
-            wallrun = new WallrunMechanic(characterController, transform, speed, 12);
         }
 
         bool cleanedup;
@@ -87,12 +84,12 @@ namespace CharacterMovement
 
             motion.Update(moveDirection, currentSpeed);
             Rotate(rotationInput);
-            Move(motion.Velocity(useGravity: !wallrun.CanWallride()));
+            Move(motion.Velocity(useGravity: !wallrun.CanWallride(characterController, speed)));
 
-            if(wallrun.CanWallride())
+            if(wallrun.CanWallride(characterController, speed))
             {
                 cleanedup = false;
-                camShake.Tilt(wallrun.Left() ? -25 : 25);
+                camShake.Tilt(wallrun.Left(transform) ? -25 : 25);
             }
             else if (!cleanedup)
             {
