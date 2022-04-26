@@ -44,25 +44,16 @@ namespace CharacterMovement
         [SerializeField]
         private Speed speed;
 
-        [SerializeField]
-        private float dashForce = 12;
-
-        [SerializeField]
-        private float dashDuration = 1;
-
-        [SerializeField]
-        private float arielDashForce = 20;
-
-        [SerializeField]
-        private float arielDashDuration = 1.5f;
-
         //private Slide slide;
 
         private JumpMechanic jump;
         private WallrunMechanic wallrun;
 
+        [SerializeField]
         private DashMechanic dash;
-        private DashMechanic arielDash;
+
+        [SerializeField]
+        private DashMechanic aerialDash;
 
         public Motion Motion { get => motion; }
 
@@ -76,9 +67,6 @@ namespace CharacterMovement
             motion = new Motion(transform, Gravity());
 
             //slide = new Slide(characterController.transform);
-
-            dash = new DashMechanic(transform, motion.Forces, dashForce, dashDuration);
-            arielDash = new DashMechanic(transform, motion.Forces, arielDashForce, arielDashDuration);
 
             wallrun = new WallrunMechanic(characterController, transform, speed, 12);
 
@@ -163,12 +151,12 @@ namespace CharacterMovement
         {
             if(characterController.isGrounded)
             {
-                dash.Dash(transform.TransformDirection(direction));
+                dash.Dash(motion.Forces, transform.TransformDirection(direction));
                 camShake.Shake(-direction.z * 2, 0, direction.x * 2, 0.25f);
             }
             else
             {
-                arielDash.Dash(transform.TransformDirection(direction));
+                aerialDash.Dash(motion.Forces, transform.TransformDirection(direction));
                 camShake.Shake(-direction.z * 3, 0, direction.x * 3, 0.25f);
             }
         }
