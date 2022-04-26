@@ -161,6 +161,7 @@ namespace CharacterMovement
             else
             {
                 arielDash.Dash(transform.TransformDirection(direction));
+                camShake.Shake(-direction.z * 3, 0, direction.x * 3, 0.25f);
             }
         }
 
