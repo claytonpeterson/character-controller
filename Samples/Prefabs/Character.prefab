@@ -372,7 +372,7 @@ MonoBehaviour:
       acceleration: 0.3
       deceleration: 0.3
   horizontalRotator:
-    rotationSpeed: 8
+    rotationSpeed: 10
     smoothing: 1
   verticalRotator:
     rotationSpeed: 10
@@ -383,9 +383,11 @@ MonoBehaviour:
     doubleJumpForce: 0.8
     maxInAirJumps: 4
   dash:
+    doubleTapActivationSpeed: 0.4
     dashForce: 40
     duration: 0.25
   aerialDash:
+    doubleTapActivationSpeed: 0.4
     dashForce: 50
     duration: 0.4
   wallrun:
