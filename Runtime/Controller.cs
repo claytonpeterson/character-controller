@@ -32,7 +32,7 @@ namespace CharacterMovement
 
         public void OnRotate(InputAction.CallbackContext ctx)
         {
-            movement.SetRotation(ctx.ReadValue<Vector2>());
+            movement.SetRotation(ctx.ReadValue<Vector2>().normalized);
         }
 
         public void OnRun(InputAction.CallbackContext ctx)

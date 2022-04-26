@@ -9,9 +9,7 @@ namespace CharacterMovement
         private readonly Speed speed;
         private readonly float minSpeed;
 
-        private bool isWallRunning;
-
-        public bool IsWallRunning => isWallRunning;
+        private float startTime;
 
         public WallrunMechanic(CharacterController characterController, Transform transform, Speed speed, float minSpeed)
         {
@@ -21,15 +19,21 @@ namespace CharacterMovement
             this.minSpeed = minSpeed;
         }
 
-        public void Update()
+        public void WallRide()
         {
-            isWallRunning = characterController.isGrounded == false && CanWallride();
-            Debug.Log(string.Format("left? {0} right? {1}", Left(), Right()));
+            if(CanWallride() && startTime <= 0)
+            {
+
+            }
         }
 
         public bool CanWallride()
         {
-            return (Left() || Right()) && MovingFastEnough();
+            return 
+                (Left() || Right()) && 
+                MovingFastEnough() &&
+                //WithinDuration() &&
+                !characterController.isGrounded;
         }
 
         public bool Left()
@@ -49,7 +53,20 @@ namespace CharacterMovement
 
         private bool MovingFastEnough()
         {
-            return speed.CurrentSpeed() > minSpeed;
+            return speed.CurrentSpeed() >= minSpeed;
+        }
+
+        private bool WithinDuration()
+        {
+            if(startTime > 0)
+            {
+                if (Time.time - startTime <= 4)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

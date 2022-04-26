@@ -112,14 +112,11 @@ namespace CharacterMovement
                 currentSpeed = speed.CurrentSpeed();
             }
 
-            // check if wallride
-            wallrun.Update();
-
             motion.Update(moveDirection, currentSpeed);
             body.Rotate(rotationInput);
-            body.Move(motion.Velocity(useGravity: !wallrun.IsWallRunning));
+            body.Move(motion.Velocity(useGravity: !wallrun.CanWallride()));
 
-            if(wallrun.IsWallRunning)
+            if(wallrun.CanWallride())
             {
                 cleanedup = false;
                 camShake.Tilt(wallrun.Left() ? -25 : 25);
