@@ -2,7 +2,7 @@
 
 namespace CharacterMovement 
 {
-    public class FirstPersonController : MonoBehaviour
+    public class Movement : MonoBehaviour
     {
         [SerializeField]
         private CharacterController characterController;

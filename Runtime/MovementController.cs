@@ -3,10 +3,10 @@ using UnityEngine.InputSystem;
 
 namespace CharacterMovement
 {
-    public class Controller : MonoBehaviour
+    public class MovementController : MonoBehaviour
     {
         [SerializeField]
-        private FirstPersonController movement;
+        private Movement movement;
 
         [SerializeField]
         private float dashDoubleTapSpeed = 0.4f;
