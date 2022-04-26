@@ -6,15 +6,36 @@ namespace CharacterMovement
     public class DashMechanic
     {
         [SerializeField]
+        private float doubleTapActivationSpeed = 0.25f;
+
+        [SerializeField]
         private float dashForce;
         
         [SerializeField]
         private float duration;
 
-        public void Dash(CombinedForce forces, Vector3 direction)
+        private double lastInput;
+
+        public bool Dash(CombinedForce forces, Vector3 direction, double time)
         {
-            forces.AddForce(force:
-                new TimedForce(direction * dashForce, duration));
+            var canDash = CanDash(DurationSinceLastTap(time));
+            if (canDash)
+            {
+                forces.AddForce(new TimedForce(direction * dashForce, duration));
+            }
+
+            lastInput = time;
+            return canDash;
+        }
+
+        public bool CanDash(double duration)
+        {
+            return duration <= doubleTapActivationSpeed;
+        }
+
+        private double DurationSinceLastTap(double currentTime)
+        {
+            return currentTime - lastInput;
         }
     }
 }

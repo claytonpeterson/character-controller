@@ -103,17 +103,21 @@ namespace CharacterMovement
             jump.Jump(characterController, motion.Forces, motion.Velocity(false));
         }
 
-        public void Dash(Vector3 direction)
+        public void Dash(Vector3 direction, double time)
         {
             if(characterController.isGrounded)
             {
-                dash.Dash(motion.Forces, transform.TransformDirection(direction));
-                camShake.Shake(-direction.z * 2, 0, direction.x * 2, 0.25f);
+                if(dash.Dash(motion.Forces, transform.TransformDirection(direction), time))
+                {
+                    camShake.Shake(-direction.z * 2, 0, direction.x * 2, 0.25f);
+                }
             }
             else
             {
-                aerialDash.Dash(motion.Forces, transform.TransformDirection(direction));
-                camShake.Shake(-direction.z * 3, 0, direction.x * 3, 0.25f);
+                if(aerialDash.Dash(motion.Forces, transform.TransformDirection(direction), time))
+                {
+                    camShake.Shake(-direction.z * 3, 0, direction.x * 3, 0.25f);
+                }
             }
         }
 
