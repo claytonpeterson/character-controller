@@ -92,6 +92,8 @@ namespace CharacterMovement
                 jumpForce / doubleJumpHeightReduction, 4);
         }
 
+        bool cleanedup;
+
         public void Update()
         {
             if (inputDirection != Vector2.zero)
@@ -117,15 +119,17 @@ namespace CharacterMovement
             body.Rotate(rotationInput);
             body.Move(motion.Velocity(useGravity: !wallrun.IsWallRunning));
 
-            /*if(wallrun.IsWallRunning)
+            if(wallrun.IsWallRunning)
             {
+                cleanedup = false;
                 camShake.Tilt(wallrun.Left() ? -25 : 25);
             }
-            else
+            else if (!cleanedup)
             {
                 camShake.Tilt(0);
+                cleanedup = true;
             }
-*/
+
             /*if (slideForce != null)
             {
                 slideForce.ChangeVelocity(slide.FloorAngle() * 15);

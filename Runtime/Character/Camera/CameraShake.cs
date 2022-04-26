@@ -8,6 +8,7 @@ public class CameraShake : MonoBehaviour
 
     private float lerp;
     private bool isShaking;
+    private bool isTilting;
 
     public void Shake(float maxShakeX, float maxShakeY, float maxShakeZ, float duration)
     {
@@ -21,8 +22,35 @@ public class CameraShake : MonoBehaviour
 
     public void Tilt(float tileAmount)
     {
+        if (isTilting)
+            return;
+
         Vector3 eulerRotation = new Vector3(0, 0, tileAmount);;
-        cam.transform.localRotation = Quaternion.Euler(eulerRotation);
+       cam.transform.localRotation = Quaternion.Euler(eulerRotation);
+
+        //StartCoroutine(TiltRoutine(Quaternion.Euler(eulerRotation), 0.5f));
+    }
+
+    private IEnumerator TiltRoutine(Quaternion endRotation, float duration)
+    {
+        isTilting = true;
+
+        Quaternion startRotation = cam.transform.localRotation;
+
+        lerp = 0;
+        while (lerp < 1)
+        {
+            lerp += Time.deltaTime / duration;
+            
+            cam.transform.localRotation = Quaternion.Lerp(
+                startRotation, 
+                endRotation, 
+                lerp);
+            
+            yield return null;
+        }
+
+        isTilting = false;
     }
 
     private IEnumerator ShakeRoutine(Quaternion endRotation, float duration)

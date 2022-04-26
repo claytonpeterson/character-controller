@@ -27,7 +27,7 @@ namespace CharacterMovement
             Debug.Log(string.Format("left? {0} right? {1}", Left(), Right()));
         }
 
-        private bool CanWallride()
+        public bool CanWallride()
         {
             return (Left() || Right()) && MovingFastEnough();
         }
