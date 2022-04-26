@@ -29,18 +29,17 @@ public class Rotator
     public void Rotate(float rotationInput)
     {
         rotationInput = rotationInput * rotationSpeed * Time.deltaTime;
-        
+
         smoothRotationInput = Mathf.Lerp(
-            smoothRotationInput, 
-            rotationInput, 
+            smoothRotationInput,
+            rotationInput,
             smoothing);
 
         rotation = GetEulerRotation(smoothRotationInput);
 
         if (rotation.magnitude > 0)
         {
-            transform.rotation = Quaternion.Euler(
-                transform.rotation.eulerAngles + rotation);
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + rotation);
         }
     }
 

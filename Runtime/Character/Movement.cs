@@ -60,9 +60,16 @@ namespace CharacterMovement
             }
 
             motion.Update(moveDirection, currentSpeed);
-            Rotate(rotationInput);
-            Move(motion.Velocity(useGravity: !wallrun.CanWallride(characterController, speed)));
 
+            var vel = motion.Velocity(useGravity: !wallrun.CanWallride(characterController, speed));
+
+            // Move and rotate
+            horizontalRotator.Rotate(rotationInput.x);
+            verticalRotator.Rotate(-rotationInput.y);
+
+            characterController.Move(vel * Time.deltaTime);
+
+            // Check for wall ride
             if(wallrun.CanWallride(characterController, speed))
             {
                 cleanedup = false;
@@ -79,9 +86,6 @@ namespace CharacterMovement
                 slideForce.ChangeVelocity(slide.FloorAngle() * 15);
                 Debug.Log(slide.FloorAngle());
             }*/
-
-            // Rotate camera
-            verticalRotator.Rotate(-rotationInput.y);
         }
 
         public void SetRotation(Vector3 rotation)
@@ -142,16 +146,7 @@ namespace CharacterMovement
         {
             return 9.81f * gravityMultiplier;
         }
-        private void Move(Vector3 velocity)
-        {
-            characterController.Move(velocity * Time.deltaTime);
-        }
-
-        private void Rotate(Vector3 rotationInput)
-        {
-            horizontalRotator.Rotate(rotationInput.x);
-        }
-
+        
         private void OnDrawGizmos()
         {
             Debug.DrawRay(transform.position, transform.forward, Color.red);

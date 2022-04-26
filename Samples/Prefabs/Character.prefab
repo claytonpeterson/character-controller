@@ -372,10 +372,10 @@ MonoBehaviour:
       acceleration: 0.3
       deceleration: 0.3
   horizontalRotator:
-    rotationSpeed: 60
+    rotationSpeed: 8
     smoothing: 1
   verticalRotator:
-    rotationSpeed: 60
+    rotationSpeed: 10
     smoothing: 1
   jump:
     duration: 1

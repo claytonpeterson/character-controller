@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!143 &213898742 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 219213489795905271, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-  m_PrefabInstance: {fileID: 305470601}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &305470601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -136,64 +131,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: jump.cc
-      value: 
-      objectReference: {fileID: 213898742}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: dash.duration
-      value: 0.25
+      propertyPath: verticalRotator.smoothing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: jump.duration
-      value: 1
+      propertyPath: verticalRotator.rotationSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: dash.dashForce
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: jump.jumpForce
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: wallrun.minSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: jump.maxInAirJumps
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: aerialDash.duration
-      value: 0.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: aerialDash.dashForce
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: jump.doubleJumpForce
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: speed.speeds.Array.data[0].maxSpeed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: speed.speeds.Array.data[1].maxSpeed
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: speed.speeds.Array.data[0].deceleration
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: speed.speeds.Array.data[1].acceleration
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 772314630, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
-      propertyPath: speed.speeds.Array.data[1].deceleration
-      value: 0.3
+      propertyPath: horizontalRotator.rotationSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 219213489795905259, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
       propertyPath: m_RootOrder
@@ -459,7 +406,7 @@ GameObject:
   - component: {fileID: 1151404941}
   - component: {fileID: 1151404940}
   - component: {fileID: 1151404939}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,7 +607,7 @@ GameObject:
   - component: {fileID: 1981920086}
   - component: {fileID: 1981920085}
   - component: {fileID: 1981920084}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
