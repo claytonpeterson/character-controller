@@ -1,44 +1,55 @@
 ﻿using UnityEngine;
 
-public class WallrunMechanic
+namespace CharacterMovement
 {
-    private readonly CharacterController characterController;
-    private readonly Transform transform;
-
-    private bool isWallRunning;
-
-    public bool IsWallRunning => isWallRunning; 
-
-    public WallrunMechanic(CharacterController characterController, Transform transform)
+    public class WallrunMechanic
     {
-        this.characterController = characterController;
-        this.transform = transform;
-    }
+        private readonly CharacterController characterController;
+        private readonly Transform transform;
+        private readonly Speed speed;
+        private readonly float minSpeed;
 
-    public void Update()
-    {
-        isWallRunning = characterController.isGrounded == false && CanWallride();
+        private bool isWallRunning;
 
-        Debug.Log(string.Format("left? {0} right? {1}", Left(), Right()));
-    }
+        public bool IsWallRunning => isWallRunning;
 
-    private bool CanWallride()
-    {
-        return Left() || Right();
-    }
+        public WallrunMechanic(CharacterController characterController, Transform transform, Speed speed, float minSpeed)
+        {
+            this.characterController = characterController;
+            this.transform = transform;
+            this.speed = speed;
+            this.minSpeed = minSpeed;
+        }
 
-    public bool Left()
-    {
-        return CheckDirection(transform.TransformDirection(Vector3.left));
-    }
+        public void Update()
+        {
+            isWallRunning = characterController.isGrounded == false && CanWallride();
+            Debug.Log(string.Format("left? {0} right? {1}", Left(), Right()));
+        }
 
-    public bool Right()
-    {
-        return CheckDirection(transform.TransformDirection(Vector3.right));
-    }
+        private bool CanWallride()
+        {
+            return (Left() || Right()) && MovingFastEnough();
+        }
 
-    private bool CheckDirection(Vector3 direction)
-    {
-        return Physics.Raycast(transform.position, direction, 2);
+        public bool Left()
+        {
+            return CheckDirection(transform.TransformDirection(Vector3.left));
+        }
+
+        public bool Right()
+        {
+            return CheckDirection(transform.TransformDirection(Vector3.right));
+        }
+
+        private bool CheckDirection(Vector3 direction)
+        {
+            return Physics.Raycast(transform.position, direction, 2);
+        }
+
+        private bool MovingFastEnough()
+        {
+            return speed.CurrentSpeed() > minSpeed;
+        }
     }
 }

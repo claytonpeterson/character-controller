@@ -83,7 +83,7 @@ namespace CharacterMovement
             dash = new DashMechanic(transform, motion.Forces, dashForce, dashDuration);
             arielDash = new DashMechanic(transform, motion.Forces, arielDashForce, arielDashDuration);
 
-            wallrun = new WallrunMechanic(characterController, transform);
+            wallrun = new WallrunMechanic(characterController, transform, speed, 12);
 
             jump = new JumpMechanic(
                 characterController, 
