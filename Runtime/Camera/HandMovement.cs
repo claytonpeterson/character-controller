@@ -3,11 +3,9 @@
 public class HandMovement : MonoBehaviour
 {
     [SerializeField] private float maxSway = 0.2f;
+    [SerializeField] private float minSwaySpeed = 0.25f;
     [SerializeField] private float maxSwaySpeed = 2;
     [SerializeField] private float returnSpeed = 10;
-
-    [SerializeField] private GameObject leftHand;
-    [SerializeField] private GameObject rightHand;
 
     [SerializeField] private CharacterController cc;
     [SerializeField] private float rotationMaxSpeed = 100f;
@@ -16,7 +14,7 @@ public class HandMovement : MonoBehaviour
 
     private Vector3 normalPosition;
     private Vector3 minPosition;
-    private Vector2 maxPosition;
+    private Vector3 maxPosition;
 
     private Vector2 input;
 
@@ -30,16 +28,17 @@ public class HandMovement : MonoBehaviour
 
     void Update()
     {
-        if (input.magnitude > 0 && CurrentSwaySpeed() > 0.25f)
+        if (CanMove())
         {
-            if (input.x > 0)
-                Sway(maxPosition, CurrentSwaySpeed());
-            else
-                Sway(minPosition, CurrentSwaySpeed());
+            MoveTowardsPosition(
+                targetPosition: input.x > 0 ? maxPosition : minPosition, 
+                speed: CurrentSwaySpeed());
         }
         else
         {
-            ReturnToCenter();
+            MoveTowardsPosition(
+                targetPosition: normalPosition, 
+                speed: returnSpeed);
         }
     }
 
@@ -48,20 +47,17 @@ public class HandMovement : MonoBehaviour
         this.input = input;
     }
 
-    private void Sway(Vector3 targetPosition, float speed)
+    private bool CanMove()
+    {
+        return input.magnitude > 0 && CurrentSwaySpeed() >= minSwaySpeed;
+    }
+
+    private void MoveTowardsPosition(Vector3 targetPosition, float speed)
     {
         transform.localPosition = Vector3.Lerp(
             a: transform.localPosition,
             b: targetPosition,
             t: speed * Time.deltaTime);
-    }
-
-    private void ReturnToCenter()
-    {
-        transform.localPosition = Vector3.Lerp(
-            a: transform.localPosition, 
-            b: normalPosition, 
-            t: returnSpeed * Time.deltaTime);
     }
 
     private float CurrentSwaySpeed()
