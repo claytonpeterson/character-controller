@@ -7,7 +7,9 @@ namespace CharacterMovement
         [SerializeField] private CharacterController characterController;
         [SerializeField] private Transform headCamera;
         [SerializeField] private float gravityMultiplier;
+
         [SerializeField] private CameraShake camShake;
+        [SerializeField] private HandMovement handMovement;
 
         [Header("Movement")]
         [SerializeField] private Motion motion;
@@ -81,6 +83,8 @@ namespace CharacterMovement
                 camShake.Tilt(0);
                 cleanedup = true;
             }
+
+            handMovement.Move(rotationInput);
 
             /*if (slideForce != null)
             {
