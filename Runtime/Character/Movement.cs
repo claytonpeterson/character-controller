@@ -22,6 +22,7 @@ namespace CharacterMovement
         [SerializeField] private DashMechanic dash;
         [SerializeField] private DashMechanic aerialDash;
         [SerializeField] private WallrunMechanic wallrun;
+        [SerializeField] private Slide slide;
 
         public Motion Motion { get => motion; }
 
@@ -133,6 +134,7 @@ namespace CharacterMovement
 
         public void SetCrouch(bool isCrouching)
         {
+            Debug.Log(slide.FloorAngle(transform.position));
             /*if (isCrouching)
             {
                 slideForce = new ConstantForce(slide.FloorAngle().normalized);
