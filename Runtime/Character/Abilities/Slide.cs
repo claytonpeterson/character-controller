@@ -3,18 +3,17 @@ using System.Collections;
 
 namespace CharacterMovement
 {
+    [System.Serializable]
     public class Slide
     {
-        private Transform body;
-
-        public Slide(Transform body)
+        public float FloorAngle(Vector3 bodyPosition)
         {
-            this.body = body;
+            return Vector3.Angle(FloorDirection(bodyPosition), Vector3.up);
         }
 
-        public Vector3 FloorAngle()
+        public Vector3 FloorDirection(Vector3 bodyPosition)
         {
-            if(Physics.Raycast(body.transform.position, Vector3.down * 2, out RaycastHit hit))
+            if(Physics.Raycast(bodyPosition, Vector3.down, out RaycastHit hit, 2))
             {
                 return hit.normal;
             }

@@ -7,7 +7,9 @@ namespace CharacterMovement
         [SerializeField] private CharacterController characterController;
         [SerializeField] private Transform headCamera;
         [SerializeField] private float gravityMultiplier;
+
         [SerializeField] private CameraShake camShake;
+        [SerializeField] private HandMovement handMovement;
 
         [Header("Movement")]
         [SerializeField] private Motion motion;
@@ -22,6 +24,7 @@ namespace CharacterMovement
         [SerializeField] private DashMechanic dash;
         [SerializeField] private DashMechanic aerialDash;
         [SerializeField] private WallrunMechanic wallrun;
+        [SerializeField] private Slide slide;
 
         public Motion Motion { get => motion; }
 
@@ -81,6 +84,8 @@ namespace CharacterMovement
                 cleanedup = true;
             }
 
+            handMovement.Move(rotationInput);
+
             /*if (slideForce != null)
             {
                 slideForce.ChangeVelocity(slide.FloorAngle() * 15);
@@ -133,6 +138,7 @@ namespace CharacterMovement
 
         public void SetCrouch(bool isCrouching)
         {
+            Debug.Log(slide.FloorAngle(transform.position));
             /*if (isCrouching)
             {
                 slideForce = new ConstantForce(slide.FloorAngle().normalized);
