@@ -5,36 +5,37 @@ namespace CharacterMovement
 {
     public class MovementController : MonoBehaviour
     {
-        [SerializeField]
-        private Movement movement;
+        [SerializeField] private Movement movement;
+
+        public Movement Movement { get => movement; set => movement = value; }
 
         public void OnMove(InputAction.CallbackContext ctx)
         {
             if (ctx.started)
             {
-                movement.Dash(
+                Movement.Dash(
                     new Vector3(
                         x: ctx.ReadValue<Vector2>().x, 
                         y: 0, 
                         z: ctx.ReadValue<Vector2>().y), ctx.time);
             }
-            movement.SetMoveDirection(ctx.ReadValue<Vector2>());
+            Movement.SetMoveDirection(ctx.ReadValue<Vector2>());
         }
 
         public void OnRotate(InputAction.CallbackContext ctx)
         {
-            movement.SetRotation(ctx.ReadValue<Vector2>());
+            Movement.SetRotation(ctx.ReadValue<Vector2>());
         }
 
         public void OnRun(InputAction.CallbackContext ctx)
         {
             if (ctx.started)
             {
-                movement.SetRunning(true);
+                Movement.SetRunning(true);
             }
             else if (ctx.canceled)
             {
-                movement.SetRunning(false);
+                Movement.SetRunning(false);
             }
         }
 
@@ -42,7 +43,7 @@ namespace CharacterMovement
         {
             if (ctx.started)
             {
-                movement.Jump();
+                Movement.Jump();
             }
         }
 
@@ -50,11 +51,11 @@ namespace CharacterMovement
         {
             if (ctx.started)
             {
-                movement.SetCrouch(true);
+                Movement.SetCrouch(true);
             }
             else if (ctx.canceled)
             {
-                movement.SetCrouch(false);
+                Movement.SetCrouch(false);
             }
         }
     }
