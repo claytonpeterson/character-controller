@@ -1,26 +1,47 @@
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 using CharacterMovement;
 
-public class Controller : MonoBehaviour
-{
-    [SerializeField] private GameObject avatarPrefab;
-    [SerializeField] private bool spawnAvatarOnStart;
+public class Controller: MonoBehaviour {
 
-    private void Start()
+    [SerializeField] 
+    private GameObject avatarPrefab;
+
+    private GameObject avatar;
+    //private Team team;
+
+    public string PlayerName { get => "Player"; }
+
+    public GameObject SpawnAvatar(Vector3 spawnPoint)
     {
-        if(spawnAvatarOnStart)
-        {
-            SpawnAvatar();
-        }
+        // Spawn the avatar
+        avatar = Instantiate(
+            avatarPrefab,
+            spawnPoint,
+            Quaternion.identity, transform);
+
+
+        GetComponent<MovementController>().Movement = avatar.GetComponent<Movement>();
+
+        return avatar;
     }
 
-    public void SpawnAvatar()
+    //public abstract void SetupAvatar(GameObject avatar, Color teamColor);
+/*
+    public void SetTeam(Team team)
     {
-        var avatar = Instantiate(avatarPrefab);
-        avatar.transform.SetParent(transform);
+        this.team = team;
+    }*/
 
-        var movementController = GetComponent<MovementController>();
-        movementController.Movement = avatar.GetComponent<Movement>();
+    public GameObject Avatar()
+    {
+        return avatar;
+    }
+
+    public bool HasAvatar()
+    {
+        return avatar != null;
     }
 }

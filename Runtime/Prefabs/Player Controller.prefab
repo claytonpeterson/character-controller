@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6079031653426634153}
   - component: {fileID: 2745102710271996292}
   - component: {fileID: -4150640329675287132}
-  - component: {fileID: 3353941377641430726}
+  - component: {fileID: 932735953564593771}
   m_Layer: 0
   m_Name: Player Controller
   m_TagString: Untagged
@@ -144,7 +144,19 @@ MonoBehaviour:
     m_ActionId: a84c83d2-075a-46ae-822e-29091eff038a
     m_ActionName: New action map/Crouch[/Keyboard/c]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CharacterActionController, Assembly-CSharp
+        m_MethodName: OnUse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 51df15be-d360-48d9-9e94-26c6233b6771
     m_ActionName: New action map/Use[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
@@ -165,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 0}
---- !u!114 &3353941377641430726
+--- !u!114 &932735953564593771
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,7 +186,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8401308398537336906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75aa1160e54f7a946bd21ee8f67e657b, type: 3}
+  m_Script: {fileID: 11500000, guid: 92f049215e239384faa4a6bede12106f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   avatarPrefab: {fileID: 219213489795905269, guid: d7c43a79cc60c334f834c282befa362e, type: 3}
