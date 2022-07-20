@@ -31,15 +31,57 @@ namespace CharacterMovement
         private Vector2 inputDirection;
         private Vector3 rotationInput;
 
+        bool cleanedup;
+
+        ConstantForce slideForce = null;
+
         private void Start()
         {
             motion = new Motion(transform, Gravity());
 
+            // TODO REFACTOR THIS (it can probably be setup in the object?)
             verticalRotator.Setup(Rotator.Axis.VERTICAL, headCamera);
             horizontalRotator.Setup(Rotator.Axis.HORIZONTAL, transform);        
         }
 
-        bool cleanedup;
+        public void SetMoveDirection(Vector2 input)
+        {
+            inputDirection = input;
+        }
+
+        public void SetRotation(Vector3 rotation)
+        {
+            rotationInput = rotation;
+        }
+
+        public void SetRunning(bool isRunning)
+        {
+            if (isRunning)
+                speed.SetSpeed(1);
+            else
+                speed.SetSpeed(0);
+        }
+
+        public void SetCrouch(bool isCrouching)
+        {
+            Debug.Log(slide.FloorAngle(transform.position));
+            /*if (isCrouching)
+            {
+                slideForce = new ConstantForce(slide.FloorAngle().normalized);
+                motion.Forces.AddForce(slideForce);
+            }
+            else
+            {
+                slideForce = null;
+                motion.Forces.RemoveForce(slideForce);
+                Debug.Log("done sliding");
+            }*/
+        }
+
+        public void Jump()
+        {
+            jump.Jump(characterController, motion.Forces, motion.Velocity(false));
+        }
 
         public void Update()
         {
@@ -49,26 +91,12 @@ namespace CharacterMovement
                 moveDirection: GetMoveDirection(), 
                 moveSpeed: GetCurrentSpeed());
 
-            var vel = motion.Velocity(useGravity: !wallrun.CanWallride(characterController, speed));
+            MoveBody();
+            RotateBody();
 
-            // Move and rotate
-            horizontalRotator.Rotate(rotationInput.x);
-            verticalRotator.Rotate(-rotationInput.y);
+            HandleWallRide();
 
-            characterController.Move(vel * Time.deltaTime);
-
-            // Check for wall ride
-            if(wallrun.CanWallride(characterController, speed))
-            {
-                cleanedup = false;
-                camShake.Tilt(wallrun.Left(transform) ? -25 : 25);
-            }
-            else if (!cleanedup)
-            {
-                camShake.Tilt(0);
-                cleanedup = true;
-            }
-
+            // TODO Can this be moved?
             handMovement.Move(rotationInput);
 
             /*if (slideForce != null)
@@ -82,7 +110,7 @@ namespace CharacterMovement
         /// Gets the move direction that cooresponds with the input direction
         /// </summary>
         /// <returns></returns>
-        public Vector3 GetMoveDirection()
+        private Vector3 GetMoveDirection()
         {
             if (inputDirection == Vector2.zero)
                 return Vector3.zero;
@@ -94,7 +122,7 @@ namespace CharacterMovement
         /// Returns the current move speed of the character
         /// </summary>
         /// <returns></returns>
-        public float GetCurrentSpeed()
+        private float GetCurrentSpeed()
         {
             if (speed.Percent() <= 0)
                 return 0;
@@ -102,19 +130,22 @@ namespace CharacterMovement
                 return speed.CurrentSpeed();
         }
 
-        public void SetRotation(Vector3 rotation)
+        /// <summary>
+        /// 
+        /// </summary>
+        private void MoveBody()
         {
-            rotationInput = rotation;
+            var vel = motion.Velocity(useGravity: !wallrun.CanWallride(characterController, speed));
+            characterController.Move(vel * Time.deltaTime);
         }
 
-        public void SetMoveDirection(Vector2 input)
+        /// <summary>
+        /// 
+        /// </summary>
+        private void RotateBody()
         {
-            inputDirection = input;
-        }
-
-        public void Jump()
-        {
-            jump.Jump(characterController, motion.Forces, motion.Velocity(false));
+            horizontalRotator.Rotate(rotationInput.x);
+            verticalRotator.Rotate(-rotationInput.y);
         }
 
         public void Dash(Vector3 direction, double time)
@@ -135,30 +166,19 @@ namespace CharacterMovement
             }
         }
 
-        public void SetRunning(bool isRunning)
+        private void HandleWallRide()
         {
-            if (isRunning)
-                speed.SetSpeed(1);
-            else
-                speed.SetSpeed(0);
-        }
-
-        ConstantForce slideForce = null;
-
-        public void SetCrouch(bool isCrouching)
-        {
-            Debug.Log(slide.FloorAngle(transform.position));
-            /*if (isCrouching)
+            // Check for wall ride
+            if (wallrun.CanWallride(characterController, speed))
             {
-                slideForce = new ConstantForce(slide.FloorAngle().normalized);
-                motion.Forces.AddForce(slideForce);
+                cleanedup = false;
+                camShake.Tilt(wallrun.Left(transform) ? -25 : 25);
             }
-            else
+            else if (!cleanedup)
             {
-                slideForce = null;
-                motion.Forces.RemoveForce(slideForce);
-                Debug.Log("done sliding");
-            }*/
+                camShake.Tilt(0);
+                cleanedup = true;
+            }
         }
 
         private float Gravity()
