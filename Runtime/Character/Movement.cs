@@ -12,7 +12,6 @@ namespace CharacterMovement
         [SerializeField] private HandMovement handMovement;
 
         [Header("Movement")]
-        [SerializeField] private Motion motion;
         [SerializeField] private Speed speed;
 
         [Header("Rotation")]
@@ -26,18 +25,19 @@ namespace CharacterMovement
         [SerializeField] private WallrunMechanic wallrun;
         [SerializeField] private Slide slide;
 
-        public Motion Motion { get => motion; }
-
         private Vector2 inputDirection;
         private Vector3 rotationInput;
 
         bool cleanedup;
 
+        CharacterControllerForces forces;
         ConstantForce slideForce = null;
+        ControlledForce characterMovement;
 
         private void Start()
         {
-            motion = new Motion(transform, Gravity());
+            characterMovement = new ControlledForce(transform);
+            forces = new CharacterControllerForces();
 
             // TODO REFACTOR THIS (it can probably be setup in the object?)
             verticalRotator.Setup(Rotator.Axis.VERTICAL, headCamera);
@@ -80,16 +80,15 @@ namespace CharacterMovement
 
         public void Jump()
         {
-            jump.Jump(characterController, motion.Forces, motion.Velocity(false));
+            jump.Jump(characterController, forces, Velocity(false));
         }
 
         public void Update()
         {
             speed.UpdateSpeed(isAccelerating: inputDirection.magnitude > 0);
 
-            motion.Update(
-                moveDirection: GetMoveDirection(), 
-                moveSpeed: GetCurrentSpeed());
+            characterMovement.AddInput(GetMoveDirection(), GetCurrentSpeed());
+            forces.RemoveCompleteForces();
 
             MoveBody();
             RotateBody();
@@ -105,6 +104,17 @@ namespace CharacterMovement
                 Debug.Log(slide.FloorAngle());
             }*/
         }
+
+        public Vector3 Velocity(bool useGravity)
+        {
+            var v = characterMovement.GetVelocity();
+
+            if (useGravity)
+                v = ApplyGravity(v);
+
+            return v + forces.Velocity();
+        }
+
 
         /// <summary>
         /// Gets the move direction that cooresponds with the input direction
@@ -135,7 +145,7 @@ namespace CharacterMovement
         /// </summary>
         private void MoveBody()
         {
-            var vel = motion.Velocity(useGravity: !wallrun.CanWallride(characterController, speed));
+            var vel = Velocity(useGravity: !wallrun.CanWallride(characterController, speed));
             characterController.Move(vel * Time.deltaTime);
         }
 
@@ -152,14 +162,14 @@ namespace CharacterMovement
         {
             if(characterController.isGrounded)
             {
-                if(dash.Dash(motion.Forces, transform.TransformDirection(direction), time))
+                if(dash.Dash(forces, transform.TransformDirection(direction), time))
                 {
                     camShake.Shake(-direction.z * 2, 0, direction.x * 2, 0.25f);
                 }
             }
             else
             {
-                if(aerialDash.Dash(motion.Forces, transform.TransformDirection(direction), time))
+                if(aerialDash.Dash(forces, transform.TransformDirection(direction), time))
                 {
                     camShake.Shake(-direction.z * 3, 0, direction.x * 3, 0.25f);
                 }
@@ -185,11 +195,17 @@ namespace CharacterMovement
         {
             return 9.81f * gravityMultiplier;
         }
-        
+
+        private Vector3 ApplyGravity(Vector3 velocity)
+        {
+            velocity.y -= 9.81f;
+            return velocity;
+        }
+
         private void OnDrawGizmos()
         {
             Debug.DrawRay(transform.position, transform.forward, Color.red);
-            Debug.DrawRay(transform.position, motion.Velocity(true), Color.green);
+            Debug.DrawRay(transform.position,Velocity(true), Color.green);
         }
     }
 }

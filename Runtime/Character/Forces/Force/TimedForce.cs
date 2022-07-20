@@ -24,7 +24,7 @@ namespace CharacterMovement
             return Time.time >= endTime;
         }
 
-        public Vector3 ForceVelocity()
+        public Vector3 GetVelocity()
         {
             var lerp = (Time.time - startTime) / duration;
 

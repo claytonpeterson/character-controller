@@ -20,7 +20,7 @@ namespace CharacterMovement
             this.moveSpeed = moveSpeed;
         }
 
-        public Vector3 ForceVelocity()
+        public Vector3 GetVelocity()
         {
             var forward = body.TransformDirection(moveDirection);
             return forward * moveSpeed;

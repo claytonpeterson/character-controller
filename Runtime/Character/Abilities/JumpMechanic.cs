@@ -17,11 +17,11 @@ namespace CharacterMovement
         [SerializeField]
         private int maxInAirJumps;
 
-        private CombinedForce forces;
+        private CharacterControllerForces forces;
         private TimedForce jump;
         private int inAirJumps;
 
-        public void Jump(CharacterController cc, CombinedForce forces, Vector3 velocity)
+        public void Jump(CharacterController cc, CharacterControllerForces forces, Vector3 velocity)
         {
             this.forces = forces;
 

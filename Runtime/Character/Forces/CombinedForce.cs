@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CharacterMovement
 {
     [System.Serializable]
-    public class CombinedForce : IMotion
+    public class CharacterControllerForces
     {
         [SerializeField]
         private List<IForce> activeForces = new List<IForce>();
@@ -14,7 +14,7 @@ namespace CharacterMovement
             Vector3 velocity = Vector3.zero;
             for (int i = 0; i < activeForces.Count; i++)
             {
-                velocity += activeForces[i].ForceVelocity();
+                velocity += activeForces[i].GetVelocity();
             }
             return velocity;
         }

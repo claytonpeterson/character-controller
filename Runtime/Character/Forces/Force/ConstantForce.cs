@@ -21,7 +21,7 @@ namespace CharacterMovement
             
         }
 
-        public Vector3 ForceVelocity()
+        public Vector3 GetVelocity()
         {
             return velocity;
         }

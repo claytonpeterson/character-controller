@@ -4,7 +4,7 @@ namespace CharacterMovement
 {
     public interface IForce
     {
-        Vector3 ForceVelocity();
+        Vector3 GetVelocity();
 
         bool IsComplete();
     }

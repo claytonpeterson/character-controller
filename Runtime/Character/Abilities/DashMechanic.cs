@@ -16,7 +16,7 @@ namespace CharacterMovement
 
         private double lastInput;
 
-        public bool Dash(CombinedForce forces, Vector3 direction, double time)
+        public bool Dash(CharacterControllerForces forces, Vector3 direction, double time)
         {
             var canDash = CanDash(DurationSinceLastTap(time));
             if (canDash)
