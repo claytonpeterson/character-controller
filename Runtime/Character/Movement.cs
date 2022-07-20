@@ -31,7 +31,6 @@ namespace CharacterMovement
         float currentSpeed = 0;
 
         private Vector2 inputDirection;
-        private Vector3 moveDirection;
         private Vector3 rotationInput;
 
         private void Start()
@@ -46,11 +45,6 @@ namespace CharacterMovement
 
         public void Update()
         {
-            if (inputDirection != Vector2.zero)
-            {
-                moveDirection = new Vector3(inputDirection.x, 0, inputDirection.y);
-            }
-
             speed.UpdateSpeed(isAccelerating: inputDirection.magnitude > 0);
 
             if(speed.Percent() <= 0)
@@ -62,7 +56,7 @@ namespace CharacterMovement
                 currentSpeed = speed.CurrentSpeed();
             }
 
-            motion.Update(moveDirection, currentSpeed);
+            motion.Update(GetMoveDirection(), currentSpeed);
 
             var vel = motion.Velocity(useGravity: !wallrun.CanWallride(characterController, speed));
 
@@ -91,6 +85,18 @@ namespace CharacterMovement
                 slideForce.ChangeVelocity(slide.FloorAngle() * 15);
                 Debug.Log(slide.FloorAngle());
             }*/
+        }
+
+        /// <summary>
+        /// Gets the move direction that cooresponds with the input direction
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 GetMoveDirection()
+        {
+            if (inputDirection == Vector2.zero)
+                return Vector3.zero;
+
+            return new Vector3(inputDirection.x, 0, inputDirection.y);
         }
 
         public void SetRotation(Vector3 rotation)
