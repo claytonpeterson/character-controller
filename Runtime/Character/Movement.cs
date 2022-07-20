@@ -28,8 +28,6 @@ namespace CharacterMovement
 
         public Motion Motion { get => motion; }
 
-        float currentSpeed = 0;
-
         private Vector2 inputDirection;
         private Vector3 rotationInput;
 
@@ -47,16 +45,9 @@ namespace CharacterMovement
         {
             speed.UpdateSpeed(isAccelerating: inputDirection.magnitude > 0);
 
-            if(speed.Percent() <= 0)
-            {
-                currentSpeed = 0;
-            }
-            else
-            {
-                currentSpeed = speed.CurrentSpeed();
-            }
-
-            motion.Update(GetMoveDirection(), currentSpeed);
+            motion.Update(
+                moveDirection: GetMoveDirection(), 
+                moveSpeed: GetCurrentSpeed());
 
             var vel = motion.Velocity(useGravity: !wallrun.CanWallride(characterController, speed));
 
@@ -97,6 +88,18 @@ namespace CharacterMovement
                 return Vector3.zero;
 
             return new Vector3(inputDirection.x, 0, inputDirection.y);
+        }
+
+        /// <summary>
+        /// Returns the current move speed of the character
+        /// </summary>
+        /// <returns></returns>
+        public float GetCurrentSpeed()
+        {
+            if (speed.Percent() <= 0)
+                return 0;
+            else
+                return speed.CurrentSpeed();
         }
 
         public void SetRotation(Vector3 rotation)
